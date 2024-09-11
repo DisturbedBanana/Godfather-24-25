@@ -9,7 +9,7 @@ using DG.Tweening;
 public class HealthBar : MonoBehaviour
 {
     private Slider _slider;
-    private int maxHealth = 100;
+    private int maxHealth = 240;
     private int currentHealth;
     
     [SerializeField, Range(0,100)] private int damage = 10;
@@ -27,9 +27,9 @@ public class HealthBar : MonoBehaviour
 
     private void Loop()
     {
-        DOVirtual.DelayedCall(2f, () =>
+        DOVirtual.DelayedCall(1f, () =>
         {
-            TakeDamage(2);
+            TakeDamage(1);
             Loop();
         });
     }
