@@ -12,6 +12,7 @@ public class ScaleOverTime : MonoBehaviour
     private Vector3 _marginVector = new Vector3(0.2f, 0.2f, 0.2f);
 
     public Vector3 targetScale;  // Target scale to reach
+    private Vector3 initialTargetScale;
     public float duration = 1.0f; // Time to reach the target scale
     private Vector3 initialScale; // Starting scale of the object
     private float timeElapsed = 0.0f; // Time counter
@@ -20,8 +21,10 @@ public class ScaleOverTime : MonoBehaviour
     void Start()
     {
         initialScale = transform.localScale;  // Store the object's initial scale
+        initialTargetScale = targetScale;
         targetScale -= _marginVector;
         _qteManager = GetComponent<QTEManager>();
+        _qteText.text = " ";
     }
 
     void Update()
@@ -52,10 +55,10 @@ public class ScaleOverTime : MonoBehaviour
     {
         if (goodKey)
         {
-            float diff = transform.localScale.x - targetScale.x;
+            float diff = transform.localScale.x - initialTargetScale.x;
             //Debug.Log($"{transform.localScale} {targetScale}");
 
-            if (diff <= 0.5)
+            if (diff <= 0.1)
             {
                 Debug.Log("win" + diff);
             }
