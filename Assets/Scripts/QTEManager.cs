@@ -67,6 +67,10 @@ public class QTEManager : MonoBehaviour
             {
                 StartCoroutine(StartQTETimer(durations[2]));
             }
+            else if (Input.GetKeyDown(KeyCode.Keypad8))
+            {
+                _scaleManager.isLastBall = true;
+            }
         }
         
     }
