@@ -7,6 +7,7 @@ public class ScaleOverTime : MonoBehaviour
 {
     [SerializeField] private GameObject _qteParent;
     [SerializeField] private TextMeshPro _qteText;
+    [SerializeField] private QTEManager _qteManager;
 
     private Vector3 _marginVector = new Vector3(0.2f, 0.2f, 0.2f);
 
@@ -20,6 +21,7 @@ public class ScaleOverTime : MonoBehaviour
     {
         initialScale = transform.localScale;  // Store the object's initial scale
         targetScale -= _marginVector;
+        _qteManager = GetComponent<QTEManager>();
     }
 
     void Update()
@@ -41,6 +43,7 @@ public class ScaleOverTime : MonoBehaviour
                 SwitchQTEVisibility();
                 isScaling = false;
                 Debug.Log("lose, time out");
+                DissapearBallAndText();
             }
         }
     }
@@ -67,7 +70,7 @@ public class ScaleOverTime : MonoBehaviour
         }
 
         SwitchQTEVisibility();
-        _qteText.text = " ";
+        DissapearBallAndText();
         isScaling = false;
     }
 
@@ -91,5 +94,11 @@ public class ScaleOverTime : MonoBehaviour
         {
             renderer.enabled = !renderer.enabled;
         }
+    }
+
+    private void DissapearBallAndText()
+    {
+        _qteText.text = " ";
+        _qteManager._animatedBall.SetActive(false);
     }
 }
