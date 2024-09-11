@@ -11,7 +11,6 @@ public class HealthBar : MonoBehaviour
     private Slider _slider;
     private int maxHealth = 100;
     private int currentHealth;
-    public event Action OnDeath;
     
     [SerializeField, Range(0,100)] private int damage = 10;
     
@@ -50,9 +49,19 @@ public class HealthBar : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown("space"))
+       
+        if (Input.GetKeyDown("d"))
         {
             TakeDamage(damage);
+        }else if (Input.GetKeyDown("p"))
+        {
+            if (Time.timeScale == 1f)
+            {
+                Time.timeScale = 0;
+            }else
+            {
+                Time.timeScale = 1;
+            }
         }
     }
 
@@ -70,7 +79,7 @@ public class HealthBar : MonoBehaviour
         if (health <= 0)
         {
             _slider.value = 0;
-            OnDeath?.Invoke();
+            Application.Quit();
         }
     }
     
