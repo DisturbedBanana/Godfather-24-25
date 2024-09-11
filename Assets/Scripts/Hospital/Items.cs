@@ -1,49 +1,61 @@
 using System;
 using UnityEngine;
+using DG.Tweening;
+using Random = UnityEngine.Random;
 
 public class Items : MonoBehaviour
 {
     private Vector2 startPos;
-    public static event Action OnBodyTouched;
     private bool isSelected;
-    public static event Action OnItemOut;
-    private Collider2D col;
     private bool isInSafeZone;
-    private bool canBeSelected = true;
-
+    private GameObject[] items;    
+    [SerializeField, Range(0, 100)] private int damage = 3;
+    private SpawnItems scriptSpawnItems;
+    
+    private HealthBar healthBarScript;
+    
     private void Start()
     {
+        healthBarScript = FindObjectOfType<HealthBar>();
+        scriptSpawnItems = FindObjectOfType<SpawnItems>();
+        items = scriptSpawnItems.items;
         startPos = transform.position;
-        col = GetComponent<Collider2D>();
     }
 
     private void Update()
     {
+        if(Input.GetMouseButtonUp(0) && isSelected && isInSafeZone)
+        { 
+            healthBarScript.BonusHealth();
+            isSelected = false;
+            gameObject.SetActive(false);
+            DOVirtual.DelayedCall(10f, () =>
+            { 
+               var random = Random.Range(0, items.Length);
+               Instantiate(items[random], startPos, Quaternion.identity);
+               Destroy(gameObject);
+            } );
+        } else if (Input.GetMouseButtonUp(0) && isSelected)
+        {
+            isSelected = false;
+        }  
+        
         if (isSelected)
         {
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             transform.position = new Vector3(mousePos.x, mousePos.y, transform.position.z);
         }
 
-        if (Input.GetMouseButtonUp(0) && isSelected)
-        {
-            isSelected = false;
-        }
-        else if(Input.GetMouseButtonUp(0) && isSelected && isInSafeZone)
-        {
-           isSelected = false;
-           OnItemOut?.Invoke();
-           col.enabled = false;
-        }
+       
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Body"))
         {
+            healthBarScript.TakeDamage(damage);
             isSelected = false;
             transform.position = startPos;
-            OnBodyTouched?.Invoke();
         }
     }
 
@@ -52,7 +64,6 @@ public class Items : MonoBehaviour
         if (other.gameObject.layer.Equals(6))
         {
             isInSafeZone = true;
-            canBeSelected = false;
         }
     }
 
@@ -62,15 +73,12 @@ public class Items : MonoBehaviour
         if (other.gameObject.layer.Equals(6))
         {
             isInSafeZone = false;
-            canBeSelected = true;
         }
     }
 
     private void OnMouseDown()
     {
-        if (canBeSelected)
-        {
-            isSelected = true;
-        }
+        isSelected = true;
+        
     }
 }
