@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
         if (nbItemsRecup == 20)
         {
             Time.timeScale = 0;
+            Application.Quit();
         }
     }
     
