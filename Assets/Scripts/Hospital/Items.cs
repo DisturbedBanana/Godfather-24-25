@@ -9,7 +9,7 @@ public class Items : MonoBehaviour
     private bool isSelected;
     private bool isInSafeZone;
     private GameObject[] items;    
-    [SerializeField, Range(0, 100)] private int damage = 3;
+    [SerializeField, Range(0, 100)] private int damage = 8;
     private SpawnItems scriptSpawnItems;
     
     private HealthBar healthBarScript;
@@ -26,7 +26,7 @@ public class Items : MonoBehaviour
     {
         if(Input.GetMouseButtonUp(0) && isSelected && isInSafeZone)
         { 
-            healthBarScript.BonusHealth();
+            GameManager.instance.RecupItem();
             isSelected = false;
             gameObject.SetActive(false);
             DOVirtual.DelayedCall(10f, () =>

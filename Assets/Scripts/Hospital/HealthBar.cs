@@ -12,7 +12,7 @@ public class HealthBar : MonoBehaviour
     private int maxHealth = 240;
     private int currentHealth;
     
-    [SerializeField, Range(0,100)] private int damage = 10;
+    [SerializeField, Range(0,100)] private int damage = 20;
     
     private int bonusHealth = 5;
 
