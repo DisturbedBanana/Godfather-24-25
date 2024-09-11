@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class SpawnItems : MonoBehaviour
 {
-    [SerializeField] private GameObject[] items;
+    [SerializeField] public GameObject[] items;
     [SerializeField] private Transform[] spawnPoints;
+    [SerializeField, Range(0, 20)] private int nb = 4;
 
 
     private void Start()
     {
-        SpawnItem(2);
+        SpawnItem(nb);
     }
     
     
