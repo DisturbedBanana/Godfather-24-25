@@ -8,6 +8,8 @@ public class ScaleOverTime : MonoBehaviour
     [SerializeField] private GameObject _qteParent;
     [SerializeField] private TextMeshPro _qteText;
 
+    private Vector3 _marginVector = new Vector3(0.2f, 0.2f, 0.2f);
+
     public Vector3 targetScale;  // Target scale to reach
     public float duration = 1.0f; // Time to reach the target scale
     private Vector3 initialScale; // Starting scale of the object
@@ -17,6 +19,7 @@ public class ScaleOverTime : MonoBehaviour
     void Start()
     {
         initialScale = transform.localScale;  // Store the object's initial scale
+        targetScale -= _marginVector;
     }
 
     void Update()

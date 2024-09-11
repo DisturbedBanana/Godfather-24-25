@@ -8,6 +8,7 @@ public class QTEManager : MonoBehaviour
     public int[] durations;
     public KeyCode[] validSequenceKeys;
     private KeyCode _chosenSequenceKey;
+    [SerializeField] private int _timerBeforeQTEStart;
     private ScaleOverTime _scaleManager;
     private void Start()
     {
@@ -47,17 +48,23 @@ public class QTEManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Keypad1))
             {
-                StartQTE(durations[0]);
+                StartCoroutine(StartQTETimer(durations[0]));
             }
             else if (Input.GetKeyDown(KeyCode.Keypad2))
             {
-                StartQTE(durations[1]);
+                StartCoroutine(StartQTETimer(durations[1]));
             }
             else if (Input.GetKeyDown(KeyCode.Keypad3))
             {
-                StartQTE(durations[2]);
+                StartCoroutine(StartQTETimer(durations[2]));
             }
         }
         
+    }
+
+    private IEnumerator StartQTETimer(int duration)
+    {
+        yield return new WaitForSeconds(_timerBeforeQTEStart);
+        StartQTE(duration);
     }
 }
