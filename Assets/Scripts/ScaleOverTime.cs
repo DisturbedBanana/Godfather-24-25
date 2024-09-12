@@ -50,12 +50,17 @@ public class ScaleOverTime : MonoBehaviour
                 isScaling = false;
                 Debug.Log("lose, time out");
                 DissapearBallAndText();
+                _qteManager.ChangeBackground(false);
             }
         }
     }
 
     public void StopScaling(bool goodKey)
     {
+        DissapearBallAndText();
+        SwitchQTEVisibility();
+        isScaling = false;
+
         if (goodKey)
         {
             float diff = transform.localScale.x - initialTargetScale.x;
@@ -64,25 +69,31 @@ public class ScaleOverTime : MonoBehaviour
             if (diff <= 0.1)
             {
                 Debug.Log("win" + diff);
+                _qteManager.PlayOutgoingAnim(isLastBall);
+                _qteManager.hitterAnimator.Play("FrappeBallHammer");
+                _qteManager.shouldHitterStayUp = false;
+                StartCoroutine(DissapearHitterCouroutine());
+                _qteManager.ChangeBackground(true);
             }
             else
             {
-                Debug.Log("lose" + diff);
+                _qteManager.shouldHitterStayUp = true;
+                _qteManager.ChangeBackground(false);
             }
         }
         else
         {
-            Debug.Log("lose, wrong key");
+            _qteManager.shouldHitterStayUp = true;
+            _qteManager.ChangeBackground(false);
         }
 
-        SwitchQTEVisibility();
-        DissapearBallAndText();
-        isScaling = false;
 
         if (isLastBall)
         {
             _homeRunText.SetActive(true);
             _homeRunText.transform.DOScale(1f, 1.0f).SetEase(Ease.OutBounce);
+            _qteManager.shouldHitterStayUp = true;
+            _qteManager.ChangeBackground(true, false);
         }
     }
 
@@ -108,9 +119,15 @@ public class ScaleOverTime : MonoBehaviour
         }
     }
 
-    private void DissapearBallAndText()
+    public void DissapearBallAndText()
     {
         _qteText.text = " ";
         _qteManager._animatedBall.SetActive(false);
+    }
+
+    private IEnumerator DissapearHitterCouroutine()
+    {
+        yield return new WaitForSeconds(2.0f);
+        _qteManager.chosenHitter.SetActive(false);
     }
 }

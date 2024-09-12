@@ -11,9 +11,21 @@ public class QTEManager : MonoBehaviour
     [SerializeField] private int _timerBeforeQTEStart;
     private ScaleOverTime _scaleManager;
     private Animation _animation;
+    public bool shouldHitterStayUp = true;
+
+    public SpriteRenderer background;
+    public Sprite normalBackGround;
+    public Sprite winBackGround;
+    public Sprite loseBackGround;
+
+    public string[] incomingAnims;
+    public string[] outgoingAnims;
+    public GameObject[] hittersList;
+    public GameObject chosenHitter;
+    public Animator hitterAnimator;
 
     [SerializeField] public GameObject _animatedBall;
-    private Animator _animator => _animatedBall.GetComponent<Animator>();
+    private Animator _ballAnimator => _animatedBall.GetComponent<Animator>();
 
     private void Start()
     {
@@ -28,8 +40,15 @@ public class QTEManager : MonoBehaviour
         Debug.Log(_chosenSequenceKey.ToString());
         _scaleManager.StartScaling(QTEduration, _chosenSequenceKey.ToString());
         _animatedBall.SetActive(true);
-        _animator.Play(GetRandomAnimString());
-        _animator.speed = 1/QTEduration;
+        _ballAnimator.Play(GetRandomAnimString(incomingAnims));
+        _ballAnimator.speed = 1/QTEduration;
+
+        if (!shouldHitterStayUp)
+        {
+            chosenHitter = hittersList[Random.Range(0, hittersList.Length)];
+            hitterAnimator = chosenHitter.GetComponent<Animator>();
+            chosenHitter.SetActive(true);
+        }
     }
 
     private void OnGUI()
@@ -81,9 +100,38 @@ public class QTEManager : MonoBehaviour
         StartQTE(duration);
     }
 
-    private string GetRandomAnimString()
+    private string GetRandomAnimString(string[] list)
     {
         string[] anims = new string[] { "anim1", "anim2"/*, "anim3"*/ };
-        return anims[Random.Range(0, anims.Length)];
+        return list[Random.Range(0, list.Length)];
+    }
+
+    public void PlayOutgoingAnim(bool isLastBall)
+    {
+        _animatedBall.SetActive(true);
+        if (!isLastBall)
+        {
+            _ballAnimator.Play("animOut");
+            return;
+        }
+
+        _ballAnimator.Play("animHomeRun");
+    }
+
+    public void ChangeBackground(bool hasWon, bool shouldGoBackToNormal = true)
+    {
+        if (hasWon)
+            background.sprite = winBackGround;
+        else
+            background.sprite = loseBackGround;
+
+        if(shouldGoBackToNormal)
+            StartCoroutine(ChangeBackgroundBackToNormal());
+    }
+
+    private IEnumerator ChangeBackgroundBackToNormal()
+    {
+        yield return new WaitForSeconds(2.0f);
+        background.sprite = normalBackGround;
     }
 }
