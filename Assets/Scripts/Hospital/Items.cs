@@ -8,18 +8,20 @@ public class Items : MonoBehaviour
     private Vector2 startPos;
     private bool isSelected;
     private bool isInSafeZone;
-    private GameObject[] items;    
     [SerializeField, Range(0, 100)] private int damage = 8;
-    private SpawnItems scriptSpawnItems;
+    
+    [SerializeField]private Sprite spriteWhenHovering;
+    private Sprite sprite;
+    private Sprite tmpSprite;
     
     private HealthBar healthBarScript;
     
     private void Start()
     {
         healthBarScript = FindObjectOfType<HealthBar>();
-        scriptSpawnItems = FindObjectOfType<SpawnItems>();
-        items = scriptSpawnItems.items;
         startPos = transform.position;
+        sprite = GetComponent<SpriteRenderer>().sprite;
+        tmpSprite = sprite;
     }
 
     private void Update()
@@ -43,9 +45,8 @@ public class Items : MonoBehaviour
         {
             var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             transform.position = new Vector3(mousePos.x, mousePos.y, transform.position.z);
+            sprite = tmpSprite;
         }
-
-       
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -80,6 +81,13 @@ public class Items : MonoBehaviour
         isSelected = true;
         
     }
-    
-    
+
+    private void OnMouseOver()
+    {
+        if (isSelected)
+        {
+            return;
+        }
+        sprite = spriteWhenHovering;
+    }
 }
