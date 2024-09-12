@@ -189,6 +189,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 1683961155}
   image: {fileID: 1329174700}
+  scriptItem: {fileID: 1346387918}
 --- !u!4 &26018215
 Transform:
   m_ObjectHideFlags: 0
@@ -1310,6 +1311,11 @@ MonoBehaviour:
   - {fileID: 996113286}
   - {fileID: 1641092821}
   nb: 4
+  itemsSpawned:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!4 &1346387919
 Transform:
   m_ObjectHideFlags: 0
@@ -1428,6 +1434,7 @@ GameObject:
   - component: {fileID: 1408698314}
   - component: {fileID: 1408698317}
   - component: {fileID: 1408698315}
+  - component: {fileID: 1408698318}
   m_Layer: 0
   m_Name: Ecran_passiant_Sleep_01
   m_TagString: Untagged
@@ -1523,6 +1530,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1408698318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1408698313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f6e7a8ecb1001440872ef65638a8c05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1511114422
 GameObject:
   m_ObjectHideFlags: 0
@@ -1885,8 +1904,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0/20
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 998a5103dc9b7c34e913e7909205c037, type: 2}
+  m_sharedMaterial: {fileID: -3311800606161608524, guid: 998a5103dc9b7c34e913e7909205c037, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
