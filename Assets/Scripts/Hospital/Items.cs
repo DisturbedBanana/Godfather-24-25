@@ -109,7 +109,7 @@ public class Items : MonoBehaviour
     private void OnMouseExit()
     {
         GetComponent<SpriteRenderer>().sprite = tmpSprite;
-        Cursor.SetCursor(cursor, Vector2.zero, CursorMode.Auto);
+        Cursor.SetCursor(cursor, Vector2.zero, CursorMode.ForceSoftware);
     }
 
     private void OnMouseOver()
@@ -119,6 +119,6 @@ public class Items : MonoBehaviour
             return;
         }
         GetComponent<SpriteRenderer>().sprite = spriteWhenHovering;
-        Cursor.SetCursor(newCursor, new Vector2(transform.position.x + 2f, transform.position.y - 2f), CursorMode.Auto);
+        Cursor.SetCursor(newCursor, new Vector2(transform.position.x + 2f, transform.position.y - 2f), CursorMode.ForceSoftware);
     }
 }

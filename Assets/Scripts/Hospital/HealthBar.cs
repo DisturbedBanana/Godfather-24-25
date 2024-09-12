@@ -58,6 +58,7 @@ public class HealthBar : MonoBehaviour
             if (Time.timeScale == 1f)
             {
                 Time.timeScale = 0;
+                Debug.Log("Pause");
             }else
             {
                 Time.timeScale = 1;
