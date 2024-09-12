@@ -7,34 +7,26 @@ public class Items : MonoBehaviour
 {
     private Vector2 startPos;
     private bool isSelected;
-    private bool isInSafeZone;
-    private GameObject[] items;    
     [SerializeField, Range(0, 100)] private int damage = 8;
-    private SpawnItems scriptSpawnItems;
+    
+    [SerializeField]private Sprite spriteWhenHovering;
+    private Sprite sprite;
+    private Sprite tmpSprite;
     
     private HealthBar healthBarScript;
     
     private void Start()
     {
         healthBarScript = FindObjectOfType<HealthBar>();
-        scriptSpawnItems = FindObjectOfType<SpawnItems>();
-        items = scriptSpawnItems.items;
         startPos = transform.position;
+        sprite = GetComponent<SpriteRenderer>().sprite;
+        tmpSprite = sprite;
     }
 
     private void Update()
     {
-        if(Input.GetMouseButtonUp(0) && isSelected && isInSafeZone)
-        { 
-            GameManager.instance.RecupItem();
-            isSelected = false;
-            gameObject.SetActive(false);
-            DOVirtual.DelayedCall(10f, () =>
-            { 
-                transform.position = startPos;
-                gameObject.SetActive(true);
-            } );
-        } else if (Input.GetMouseButtonUp(0) && isSelected)
+        
+        if (Input.GetMouseButtonUp(0) && isSelected)
         {
             isSelected = false;
         }  
@@ -43,9 +35,8 @@ public class Items : MonoBehaviour
         {
             var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             transform.position = new Vector3(mousePos.x, mousePos.y, transform.position.z);
+            sprite = tmpSprite;
         }
-
-       
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -62,24 +53,29 @@ public class Items : MonoBehaviour
     {
         if (other.gameObject.layer.Equals(6))
         {
-            isInSafeZone = true;
+            isSelected = false;
+            gameObject.SetActive(false);
+            DOVirtual.DelayedCall(10f, () =>
+            {
+                transform.position = startPos;
+                gameObject.SetActive(true);
+            });
         }
     }
-
-
-    private void OnCollisionExit2D(Collision2D other)
-    {
-        if (other.gameObject.layer.Equals(6))
-        {
-            isInSafeZone = false;
-        }
-    }
+    
 
     private void OnMouseDown()
     {
         isSelected = true;
         
     }
-    
-    
+
+    private void OnMouseOver()
+    {
+        if (isSelected)
+        {
+            return;
+        }
+        sprite = spriteWhenHovering;
+    }
 }
