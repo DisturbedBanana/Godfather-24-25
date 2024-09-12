@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using DG.Tweening;
+using UnityEditor;
 using Random = UnityEngine.Random;
 
 public class Items : MonoBehaviour
@@ -12,6 +13,8 @@ public class Items : MonoBehaviour
     [SerializeField]private Sprite spriteWhenHovering;
     private Sprite sprite;
     private Sprite tmpSprite;
+    private Texture2D cursor;
+    [SerializeField] private Texture2D newCursor;
     
     private HealthBar healthBarScript;
     
@@ -21,8 +24,9 @@ public class Items : MonoBehaviour
         startPos = transform.position;
         sprite = GetComponent<SpriteRenderer>().sprite;
         tmpSprite = sprite;
+        cursor = PlayerSettings.defaultCursor;
     }
-
+    
     private void Update()
     {
         
@@ -35,7 +39,6 @@ public class Items : MonoBehaviour
         {
             var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             transform.position = new Vector3(mousePos.x, mousePos.y, transform.position.z);
-            sprite = tmpSprite;
         }
     }
 
@@ -70,12 +73,19 @@ public class Items : MonoBehaviour
         
     }
 
+    private void OnMouseExit()
+    {
+        GetComponent<SpriteRenderer>().sprite = tmpSprite;
+        Cursor.SetCursor(cursor, Vector2.zero, CursorMode.Auto);
+    }
+
     private void OnMouseOver()
     {
         if (isSelected)
         {
             return;
         }
-        sprite = spriteWhenHovering;
+        GetComponent<SpriteRenderer>().sprite = spriteWhenHovering;
+        Cursor.SetCursor(newCursor, new Vector2(transform.position.x + 2f, transform.position.y - 2f), CursorMode.Auto);
     }
 }
