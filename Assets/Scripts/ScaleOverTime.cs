@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using DG.Tweening;
 using UnityEngine;
 
 public class ScaleOverTime : MonoBehaviour
@@ -8,9 +9,11 @@ public class ScaleOverTime : MonoBehaviour
     [SerializeField] private GameObject _qteParent;
     [SerializeField] private TextMeshPro _qteText;
     [SerializeField] private QTEManager _qteManager;
+    [SerializeField] private GameObject _homeRunText;
+
+    public bool isLastBall = false;
 
     private Vector3 _marginVector = new Vector3(0.2f, 0.2f, 0.2f);
-
     public Vector3 targetScale;  // Target scale to reach
     private Vector3 initialTargetScale;
     public float duration = 1.0f; // Time to reach the target scale
@@ -75,6 +78,12 @@ public class ScaleOverTime : MonoBehaviour
         SwitchQTEVisibility();
         DissapearBallAndText();
         isScaling = false;
+
+        if (isLastBall)
+        {
+            _homeRunText.SetActive(true);
+            _homeRunText.transform.DOScale(1f, 1.0f).SetEase(Ease.OutBounce);
+        }
     }
 
     // Call this method to start the scaling
