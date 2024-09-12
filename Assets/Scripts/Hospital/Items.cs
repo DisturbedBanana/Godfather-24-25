@@ -31,9 +31,8 @@ public class Items : MonoBehaviour
             gameObject.SetActive(false);
             DOVirtual.DelayedCall(10f, () =>
             { 
-               var random = Random.Range(0, items.Length);
-               Instantiate(items[random], startPos, Quaternion.identity);
-               Destroy(gameObject);
+                transform.position = startPos;
+                gameObject.SetActive(true);
             } );
         } else if (Input.GetMouseButtonUp(0) && isSelected)
         {
@@ -81,4 +80,6 @@ public class Items : MonoBehaviour
         isSelected = true;
         
     }
+    
+    
 }

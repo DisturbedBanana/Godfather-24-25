@@ -19,9 +19,8 @@ public class SpawnItems : MonoBehaviour
     {
         for (var i = 0; i < nbItems; i++)
         {
-            var random = Random.Range(0, items.Length); 
             var pos = new Vector2(spawnPoints[i].position.x, spawnPoints[i].position.y);
-            Instantiate(items[random], pos, Quaternion.identity);
+            Instantiate(items[i], pos, Quaternion.identity);
         }
     }    
     
