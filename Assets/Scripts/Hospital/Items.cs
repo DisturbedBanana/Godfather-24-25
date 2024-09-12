@@ -59,6 +59,7 @@ public class Items : MonoBehaviour
         if (other.gameObject.layer.Equals(6))
         {
             isSelected = false;
+            GameManager.instance.RecupItem();
             gameObject.SetActive(false);
             DOVirtual.DelayedCall(10f, () =>
             {
