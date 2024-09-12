@@ -18,7 +18,9 @@ public class Items : MonoBehaviour
     private Texture2D cursor;
     [SerializeField] private Texture2D newCursor;
     private Image image;
-
+    
+    [SerializeField] private float speedReapparition = 5f;
+    
 private Vector2 distance;
     
     private HealthBar healthBarScript;
@@ -69,7 +71,7 @@ private Vector2 distance;
             isSelected = false;
             GameManager.instance.RecupItem();
             gameObject.SetActive(false);
-            DOVirtual.DelayedCall(10f, () =>
+            DOVirtual.DelayedCall(speedReapparition, () =>
             {
                 transform.position = startPos;
                 gameObject.SetActive(true);
