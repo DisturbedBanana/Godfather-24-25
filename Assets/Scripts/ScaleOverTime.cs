@@ -51,6 +51,7 @@ public class ScaleOverTime : MonoBehaviour
                 Debug.Log("lose, time out");
                 DissapearBallAndText();
                 _qteManager.ChangeBackground(false);
+                _qteManager.PlayLoseParticles();
             }
         }
     }
@@ -69,32 +70,46 @@ public class ScaleOverTime : MonoBehaviour
             if (diff <= 0.1)
             {
                 Debug.Log("win" + diff);
+                _qteManager.hitterAnimator.Play(GetHitterAnimationName(_qteManager.chosenHitter.name));
                 _qteManager.PlayOutgoingAnim(isLastBall);
-                _qteManager.hitterAnimator.Play("FrappeBallHammer");
-                _qteManager.shouldHitterStayUp = false;
-                StartCoroutine(DissapearHitterCouroutine());
-                _qteManager.ChangeBackground(true);
+
+
+                foreach (SpriteRenderer item in _qteManager.impactFrameSprites)
+                {
+                    item.enabled = true;
+                    StartCoroutine(DissapearImpactFramesCoroutine());
+                }
+
+                Camera sceneCamera = Camera.main;
+                sceneCamera.DOShakePosition(0.5f, 0.3f, 10, 90, false);
+
+                if (isLastBall)
+                {
+                    _homeRunText.SetActive(true);
+                    _homeRunText.transform.DOScale(1f, 1.0f).SetEase(Ease.OutBounce);
+                    _qteManager.shouldHitterStayUp = true;
+                    _qteManager.ChangeBackground(true, false);
+                    _qteManager.PlayWinParticles();
+                }
+                else
+                {
+                    _qteManager.shouldHitterStayUp = false;
+                    StartCoroutine(DissapearHitterCouroutine());
+                    _qteManager.ChangeBackground(true);
+                }
             }
             else
             {
                 _qteManager.shouldHitterStayUp = true;
                 _qteManager.ChangeBackground(false);
+                _qteManager.PlayLoseParticles();
             }
         }
         else
         {
             _qteManager.shouldHitterStayUp = true;
             _qteManager.ChangeBackground(false);
-        }
-
-
-        if (isLastBall)
-        {
-            _homeRunText.SetActive(true);
-            _homeRunText.transform.DOScale(1f, 1.0f).SetEase(Ease.OutBounce);
-            _qteManager.shouldHitterStayUp = true;
-            _qteManager.ChangeBackground(true, false);
-            _qteManager.PlayWinParticles();
+            _qteManager.PlayLoseParticles();
         }
     }
 
@@ -130,5 +145,32 @@ public class ScaleOverTime : MonoBehaviour
     {
         yield return new WaitForSeconds(2.0f);
         _qteManager.chosenHitter.SetActive(false);
+    }
+
+    private IEnumerator DissapearImpactFramesCoroutine()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        foreach (SpriteRenderer item in _qteManager.impactFrameSprites)
+        {
+            item.enabled = false;
+        }
+    }
+
+    private string GetHitterAnimationName(string hitterName)
+    {
+        switch (hitterName)
+        {
+            case "FrappeurHammer":
+                return "FrappeBallHammer";
+            case "Frappeur":
+                return "FrappeBall";
+            case "Frappeur2":
+                return "FrappeBallBatte";
+            case "Frappeur3":
+                return "FrappeBallWrench";
+            default:
+                return " ";
+        }
     }
 }

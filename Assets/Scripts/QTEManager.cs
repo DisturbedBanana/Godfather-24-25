@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using UnityEngine;
 
 public class QTEManager : MonoBehaviour
@@ -14,6 +15,8 @@ public class QTEManager : MonoBehaviour
     public bool shouldHitterStayUp = true;
 
     public ParticleSystem[] winEffects;
+    public ParticleSystem[] loseEffects;
+    public SpriteRenderer[] impactFrameSprites;
 
     public SpriteRenderer background;
     public Sprite normalBackGround;
@@ -34,7 +37,9 @@ public class QTEManager : MonoBehaviour
         _animatedBall.SetActive(false);
         _scaleManager = GetComponent<ScaleOverTime>();
         _animation = _animatedBall.GetComponent<Animation>();
-        StopWinParticles();
+
+        foreach (ParticleSystem effect in winEffects)
+            effect.Stop();
     }
 
     public void StartQTE(float QTEduration)
@@ -148,17 +153,9 @@ public class QTEManager : MonoBehaviour
 
     public void PlayLoseParticles()
     {
-        foreach (ParticleSystem effect in winEffects)
+        foreach (ParticleSystem effect in loseEffects)
         {
-            effect.Stop();
-        }
-    }
-
-    public void StopWinParticles()
-    {
-        foreach (ParticleSystem effect in winEffects)
-        {
-            effect.Stop();
+            effect.Play();
         }
     }
 }
