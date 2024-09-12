@@ -2,6 +2,8 @@ using System;
 using UnityEngine;
 using DG.Tweening;
 using UnityEditor;
+using UnityEditor.VersionControl;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class Items : MonoBehaviour
@@ -9,19 +11,21 @@ public class Items : MonoBehaviour
     private Vector2 startPos;
     private bool isSelected;
     [SerializeField, Range(0, 100)] private int damage = 8;
-    
-    [SerializeField]private Sprite spriteWhenHovering;
+
+    [SerializeField] private Sprite spriteWhenHovering;
     private Sprite sprite;
     private Sprite tmpSprite;
     private Texture2D cursor;
     [SerializeField] private Texture2D newCursor;
+    private Image image;
 
-    private Vector2 distance;
+private Vector2 distance;
     
     private HealthBar healthBarScript;
     
     private void Start()
     {
+        image = GameManager.instance.image;
         healthBarScript = FindObjectOfType<HealthBar>();
         startPos = transform.position;
         sprite = GetComponent<SpriteRenderer>().sprite;
@@ -48,6 +52,9 @@ public class Items : MonoBehaviour
     {
         if (collision.CompareTag("Body"))
         {
+            image.gameObject.SetActive(true);
+            
+            DOVirtual.DelayedCall(1f, () => { image.gameObject.SetActive(false); });
             healthBarScript.TakeDamage(damage);
             isSelected = false;
             transform.position = startPos;
