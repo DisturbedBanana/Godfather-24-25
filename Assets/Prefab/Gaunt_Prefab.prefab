@@ -162,3 +162,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 8
+  spriteWhenHovering: {fileID: 0}
+  newCursor: {fileID: 2800000, guid: a6d14c8aa858f5946bcd692e6ee4f831, type: 3}
