@@ -7,7 +7,6 @@ public class Items : MonoBehaviour
 {
     private Vector2 startPos;
     private bool isSelected;
-    private bool isInSafeZone;
     [SerializeField, Range(0, 100)] private int damage = 8;
     
     [SerializeField]private Sprite spriteWhenHovering;
@@ -26,17 +25,8 @@ public class Items : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetMouseButtonUp(0) && isSelected && isInSafeZone)
-        { 
-            GameManager.instance.RecupItem();
-            isSelected = false;
-            gameObject.SetActive(false);
-            DOVirtual.DelayedCall(10f, () =>
-            { 
-                transform.position = startPos;
-                gameObject.SetActive(true);
-            } );
-        } else if (Input.GetMouseButtonUp(0) && isSelected)
+        
+        if (Input.GetMouseButtonUp(0) && isSelected)
         {
             isSelected = false;
         }  
@@ -63,18 +53,16 @@ public class Items : MonoBehaviour
     {
         if (other.gameObject.layer.Equals(6))
         {
-            isInSafeZone = true;
+            isSelected = false;
+            gameObject.SetActive(false);
+            DOVirtual.DelayedCall(10f, () =>
+            {
+                transform.position = startPos;
+                gameObject.SetActive(true);
+            });
         }
     }
-
-
-    private void OnCollisionExit2D(Collision2D other)
-    {
-        if (other.gameObject.layer.Equals(6))
-        {
-            isInSafeZone = false;
-        }
-    }
+    
 
     private void OnMouseDown()
     {
