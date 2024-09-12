@@ -81,7 +81,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 2}
+  m_Size: {x: 2.7, y: 5.73}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -162,5 +162,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 8
-  spriteWhenHovering: {fileID: 21300000, guid: 0aef9dbfa3d45b347ba435f6bdeaeeed, type: 3}
+  spriteWhenHovering: {fileID: 21300000, guid: 8682097113c8ed14ea4a74018b669dd7, type: 3}
   newCursor: {fileID: 2800000, guid: 5453264ecbf06e0469556c9c38f996fc, type: 3}
