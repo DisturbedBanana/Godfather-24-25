@@ -94,6 +94,7 @@ public class ScaleOverTime : MonoBehaviour
             _homeRunText.transform.DOScale(1f, 1.0f).SetEase(Ease.OutBounce);
             _qteManager.shouldHitterStayUp = true;
             _qteManager.ChangeBackground(true, false);
+            _qteManager.PlayWinParticles();
         }
     }
 

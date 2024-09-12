@@ -13,6 +13,8 @@ public class QTEManager : MonoBehaviour
     private Animation _animation;
     public bool shouldHitterStayUp = true;
 
+    public ParticleSystem[] winEffects;
+
     public SpriteRenderer background;
     public Sprite normalBackGround;
     public Sprite winBackGround;
@@ -32,6 +34,7 @@ public class QTEManager : MonoBehaviour
         _animatedBall.SetActive(false);
         _scaleManager = GetComponent<ScaleOverTime>();
         _animation = _animatedBall.GetComponent<Animation>();
+        StopWinParticles();
     }
 
     public void StartQTE(float QTEduration)
@@ -133,5 +136,29 @@ public class QTEManager : MonoBehaviour
     {
         yield return new WaitForSeconds(2.0f);
         background.sprite = normalBackGround;
+    }
+
+    public void PlayWinParticles()
+    {
+        foreach (ParticleSystem effect in winEffects)
+        {
+            effect.Play();
+        }
+    }
+
+    public void PlayLoseParticles()
+    {
+        foreach (ParticleSystem effect in winEffects)
+        {
+            effect.Stop();
+        }
+    }
+
+    public void StopWinParticles()
+    {
+        foreach (ParticleSystem effect in winEffects)
+        {
+            effect.Stop();
+        }
     }
 }
