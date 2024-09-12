@@ -15,6 +15,8 @@ public class Items : MonoBehaviour
     private Sprite tmpSprite;
     private Texture2D cursor;
     [SerializeField] private Texture2D newCursor;
+
+    private Vector2 distance;
     
     private HealthBar healthBarScript;
     
@@ -38,7 +40,7 @@ public class Items : MonoBehaviour
         if (isSelected)
         {
             var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            transform.position = new Vector3(transform.position.x + mousePos.x, transform.position.y + mousePos.y, transform.position.z);
+            transform.position = new Vector3(mousePos.x - distance.x, mousePos.y - distance.y, transform.position.z);
         }
     }
 
@@ -70,7 +72,7 @@ public class Items : MonoBehaviour
     private void OnMouseDown()
     {
         isSelected = true;
-        
+        distance = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
     }
 
     private void OnMouseExit()
