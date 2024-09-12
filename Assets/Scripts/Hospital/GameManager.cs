@@ -19,13 +19,13 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        text.text = nbItemsRecup.ToString();
+        text.text = nbItemsRecup.ToString()+ "/20";
     }
 
     public void RecupItem()
     {
         nbItemsRecup++;
-        text.text = nbItemsRecup.ToString();
+        text.text = nbItemsRecup.ToString()+ "/20";
     }
 
     private void Update()
