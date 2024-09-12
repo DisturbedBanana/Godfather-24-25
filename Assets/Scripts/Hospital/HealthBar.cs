@@ -55,14 +55,7 @@ public class HealthBar : MonoBehaviour
             TakeDamage(damage);
         }else if (Input.GetKeyDown("p"))
         {
-            if (Time.timeScale == 1f)
-            {
-                Time.timeScale = 0;
-                Debug.Log("Pause");
-            }else
-            {
-                Time.timeScale = 1;
-            }
+            BonusHealth();
         }
     }
 
