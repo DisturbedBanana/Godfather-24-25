@@ -38,7 +38,7 @@ public class Items : MonoBehaviour
         if (isSelected)
         {
             var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            transform.position = new Vector3(mousePos.x, mousePos.y, transform.position.z);
+            transform.position = new Vector3(transform.position.x + mousePos.x, transform.position.y + mousePos.y, transform.position.z);
         }
     }
 
