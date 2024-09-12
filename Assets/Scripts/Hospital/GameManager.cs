@@ -12,34 +12,25 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI text;
     
      [SerializeField] public SpriteRenderer image;
-     private GameObject[] items;
+     
+     public event Action OnItemRecup;
 
-  [SerializeField]  private SpawnItems scriptItem;
+    [SerializeField]  private SpawnItems scriptItem;
     
     private void Awake()
     {
         instance = this;
-        
     }
 
     private void Start()
     {
-        scriptItem.OnSpawn += SaveItem;
         image.gameObject.SetActive(false);
         text.text = nbItemsRecup.ToString()+ "/20";
     }
 
-    private void OnDestroy()
-    {
-        scriptItem.OnSpawn -= SaveItem;
-
-    }
-
-    private void SaveItem()
-    {
-        items = scriptItem.items;
-    }
-
+    
+    
+    
     public void RecupItem()
     {
         nbItemsRecup++;
@@ -52,11 +43,7 @@ public class GameManager : MonoBehaviour
         {
 
             Time.timeScale = 0;
-            image.gameObject.SetActive(true);
-            foreach (var item in items)
-            {
-                item.gameObject.SetActive(false);
-            }
+            OnItemRecup?.Invoke();
         }
     }
     

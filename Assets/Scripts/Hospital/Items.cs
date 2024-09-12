@@ -21,20 +21,41 @@ public class Items : MonoBehaviour
     
     [SerializeField] private float speedReapparition = 5f;
     
-private Vector2 distance;
+    
+    private GameManager gameManager;
+    
+    private Vector2 distance;
     
     private HealthBar healthBarScript;
     
     private void Start()
     {
+        gameManager = GameManager.instance;
         image = GameManager.instance.image;
         healthBarScript = FindObjectOfType<HealthBar>();
         startPos = transform.position;
         sprite = GetComponent<SpriteRenderer>().sprite;
         tmpSprite = sprite;
         cursor = PlayerSettings.defaultCursor;
+        gameManager.OnItemRecup += DestroyItem;
+
     }
-    
+
+
+    private void OnDestroy()
+    {
+        gameManager.OnItemRecup += DestroyItem;
+    }
+
+    private void DestroyItem()
+    {
+        DOTween.KillAll();
+        if (isActiveAndEnabled)
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
     private void Update()
     {
         
@@ -55,7 +76,6 @@ private Vector2 distance;
         if (collision.CompareTag("Body"))
         {
             image.gameObject.SetActive(true);
-            
             DOVirtual.DelayedCall(1f, () => { image.gameObject.SetActive(false); });
             healthBarScript.TakeDamage(damage);
             isSelected = false;
