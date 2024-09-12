@@ -17,7 +17,7 @@ public class Items : MonoBehaviour
     private Sprite tmpSprite;
     private Texture2D cursor;
     [SerializeField] private Texture2D newCursor;
-    private Image image;
+    private SpriteRenderer image;
     
     [SerializeField] private float speedReapparition = 5f;
     
