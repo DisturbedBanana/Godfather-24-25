@@ -58,6 +58,7 @@ public class Items : MonoBehaviour
     {
         if (other.gameObject.layer.Equals(6))
         {
+            OnMouseExit();
             isSelected = false;
             GameManager.instance.RecupItem();
             gameObject.SetActive(false);
