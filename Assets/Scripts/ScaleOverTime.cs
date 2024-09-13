@@ -7,7 +7,7 @@ using UnityEngine;
 public class ScaleOverTime : MonoBehaviour
 {
     [SerializeField] private GameObject _qteParent;
-    [SerializeField] private TextMeshPro _qteText;
+    [SerializeField] public TextMeshPro _qteText;
     [SerializeField] private QTEManager _qteManager;
     [SerializeField] private GameObject _homeRunText;
 
@@ -52,6 +52,7 @@ public class ScaleOverTime : MonoBehaviour
                 DissapearBallAndText();
                 _qteManager.ChangeBackground(false);
                 _qteManager.PlayLoseParticles();
+                _qteManager.shouldHitterStayUp = true;
             }
         }
     }

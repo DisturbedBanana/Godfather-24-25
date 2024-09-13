@@ -94,6 +94,11 @@ public class QTEManager : MonoBehaviour
             {
                 StartCoroutine(StartQTETimer(durations[2]));
             }
+            else if (Input.GetKeyDown(KeyCode.Keypad6))
+            {
+                StartCoroutine(StartQTETimer(durations[2]));
+                StartCoroutine(ChangeCorrectKeyMidQTE(durations[2]));
+            }
             else if (Input.GetKeyDown(KeyCode.Keypad8))
             {
                 _scaleManager.isLastBall = true;
@@ -157,5 +162,20 @@ public class QTEManager : MonoBehaviour
         {
             effect.Play();
         }
+    }
+
+    public IEnumerator ChangeCorrectKeyMidQTE(float QTEDuration)
+    {
+        yield return new WaitForSeconds(QTEDuration/2 + _timerBeforeQTEStart);
+        KeyCode oldKey = _chosenSequenceKey;
+        KeyCode newKey = validSequenceKeys[Random.Range(0, validSequenceKeys.Length)];
+
+        while (newKey == oldKey)
+        {
+            newKey = validSequenceKeys[Random.Range(0, validSequenceKeys.Length)];
+        }
+
+        _chosenSequenceKey = newKey;
+        _scaleManager._qteText.text = newKey.ToString();
     }
 }
