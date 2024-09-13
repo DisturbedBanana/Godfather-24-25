@@ -19,7 +19,6 @@ public class Anim : MonoBehaviour
         if (isSelected && GameManager.instance.image.isVisible)
         {
             AnimStart();
-            Debug.Log("AnimStart");
             isSelected = false;
         }
     }

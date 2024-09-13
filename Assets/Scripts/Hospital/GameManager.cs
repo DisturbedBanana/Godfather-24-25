@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI text;
     
      [SerializeField] public SpriteRenderer image;
-     
+     [SerializeField] private SpriteRenderer[] hearts;
      public event Action OnItemRecup;
 
     [SerializeField]  private SpawnItems scriptItem;
@@ -34,7 +34,11 @@ public class GameManager : MonoBehaviour
     public void RecupItem()
     {
         nbItemsRecup++;
-        text.text = nbItemsRecup.ToString()+ "/20";
+        if (nbItemsRecup % 2 == 0 && nbItemsRecup / 2 - 1 < hearts.Length)
+        {
+            hearts[nbItemsRecup / 2 - 1].gameObject.SetActive(true);
+        }
+        text.text = nbItemsRecup+ "/20";
     }
 
     private void Update()
