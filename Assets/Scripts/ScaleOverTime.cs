@@ -44,7 +44,7 @@ public class ScaleOverTime : MonoBehaviour
             transform.localScale = Vector3.Lerp(initialScale, targetScale, t);
 
             // If the scaling is done, stop updating
-            if (t >= 1.0f)
+            if (t >= 1.5f)
             {
                 SwitchQTEVisibility();
                 isScaling = false;
