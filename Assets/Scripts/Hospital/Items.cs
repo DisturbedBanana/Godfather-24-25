@@ -2,7 +2,6 @@ using System;
 using UnityEngine;
 using DG.Tweening;
 using UnityEditor;
-using UnityEditor.VersionControl;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -36,7 +35,6 @@ public class Items : MonoBehaviour
         startPos = transform.position;
         sprite = GetComponent<SpriteRenderer>().sprite;
         tmpSprite = sprite;
-        cursor = PlayerSettings.defaultCursor;
         gameManager.OnItemRecup += DestroyItem;
 
     }
