@@ -126,7 +126,7 @@ public class ScaleOverTime : MonoBehaviour
         isScaling = true;                     // Set the flag to start scaling
     }
 
-    private void SwitchQTEVisibility()
+    public void SwitchQTEVisibility()
     {
         SpriteRenderer[] renderers = _qteParent.GetComponentsInChildren<SpriteRenderer>();
 

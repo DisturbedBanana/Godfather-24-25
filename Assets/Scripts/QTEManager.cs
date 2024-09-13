@@ -99,6 +99,10 @@ public class QTEManager : MonoBehaviour
                 StartCoroutine(StartQTETimer(durations[2]));
                 StartCoroutine(ChangeCorrectKeyMidQTE(durations[2]));
             }
+            else if (Input.GetKeyDown(KeyCode.Keypad4))
+            {
+                _scaleManager.SwitchQTEVisibility();
+            }
             else if (Input.GetKeyDown(KeyCode.Keypad8))
             {
                 _scaleManager.isLastBall = true;
