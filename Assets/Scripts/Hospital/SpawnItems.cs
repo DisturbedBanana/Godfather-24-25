@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+
+
 
 public class SpawnItems : MonoBehaviour
 {
@@ -8,6 +11,7 @@ public class SpawnItems : MonoBehaviour
     [SerializeField] private Transform[] spawnPoints;
     [SerializeField, Range(0, 20)] private int nb = 4;
 
+    public GameObject[] itemsSpawned;
 
     private void Start()
     {
@@ -19,9 +23,8 @@ public class SpawnItems : MonoBehaviour
     {
         for (var i = 0; i < nbItems; i++)
         {
-            var random = Random.Range(0, items.Length); 
             var pos = new Vector2(spawnPoints[i].position.x, spawnPoints[i].position.y);
-            Instantiate(items[random], pos, Quaternion.identity);
+            itemsSpawned[i] = Instantiate(items[i], pos, items[i].transform.rotation);
         }
     }    
     
