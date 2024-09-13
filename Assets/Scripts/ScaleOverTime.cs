@@ -16,7 +16,7 @@ public class ScaleOverTime : MonoBehaviour
     private Vector3 _marginVector = new Vector3(0.2f, 0.2f, 0.2f);
     public Vector3 targetScale;  // Target scale to reach
     private Vector3 initialTargetScale;
-    public float duration = 1.0f; // Time to reach the target scale
+    public float duration = 1.5f; // Time to reach the target scale
     private Vector3 initialScale; // Starting scale of the object
     private float timeElapsed = 0.0f; // Time counter
     public bool isScaling = false; // Scaling flag
